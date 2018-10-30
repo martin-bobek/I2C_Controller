@@ -3,15 +3,15 @@ use ieee.std_logic_1164.all;
 
 entity top_level is
   port (
-    button_1: in  std_logic;
-    button_2: in  std_logic;
-    led_1:    out std_logic;
-    led_2:    out std_logic
+    button_1: in    std_logic;
+    button_2: in    std_logic;
+    sda:      inout std_logic;
+    scl:      inout std_logic
   );
 end;
 
 architecture rtl of top_level is
 begin
-  led_1 <= button_1;
-  led_2 <= button_2;
+  sda <= '0' when (button_1 = '0') else 'Z';
+  scl <= '0' when (button_2 = '0') else 'Z';
 end;
