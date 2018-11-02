@@ -4,36 +4,36 @@ use ieee.std_logic_1164.all;
 entity top_level_tb is end;
 
 architecture rtl of top_level_tb is 
-  constant period: time := 10ns;
+  constant period : time := 10ns;
   
-  signal button_1, button_2: std_logic;
-  signal led_1: std_logic;
+  signal clk     : std_logic;
+  signal buttons : std_logic_vector(1 downto 0);
+  signal leds    : std_logic_vector(1 downto 0);
+  signal sda     : std_logic;
+  signal scl     : std_logic;
 begin
   uut: entity work.top_level
     port map (
-      button_1 => button_1,
-      button_2 => button_2,
-      led_1    => led_1
+      clk     => clk,
+      buttons => buttons,
+      leds    => leds,
+      sda     => sda,
+      scl     => scl
     );
 
   process begin
-    button_1 <= '0';
-    button_2 <= '0';
-    wait for period;
+    buttons <= "00";
+    wait for 5*period;
     
-    button_1 <= '0';
-    button_2 <= 'Z';
-    wait for period;
+    buttons <= "01";
+    wait for 5*period;
     
-    button_1 <= 'Z';
-    button_2 <= 'Z';
-    wait for period;
+    buttons <= "11";
+    wait for 5*period;
     
-    button_1 <= 'Z';
-    button_2 <= '0';
-    wait for period;
+    buttons <= "10";
+    wait for 5*period;
   end process;
   
-  button_1 <= 'H';
-  button_2 <= 'H';
+  clk <= not clk after period/2;
 end;
