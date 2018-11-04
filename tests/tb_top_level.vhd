@@ -1,12 +1,12 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity top_level_tb is end;
+entity tb_top_level is end;
 
-architecture rtl of top_level_tb is 
-  constant period : time := 10ns;
+architecture rtl of tb_top_level is 
+  constant period : time := 20ns;
   
-  signal clk     : std_logic;
+  signal clk     : std_logic := '1';
   signal buttons : std_logic_vector(1 downto 0);
   signal leds    : std_logic_vector(1 downto 0);
   signal sda     : std_logic;

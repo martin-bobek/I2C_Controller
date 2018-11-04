@@ -12,7 +12,25 @@ entity i2c is
 end;
 
 architecture rtl of i2c is
+  signal slow_clk : std_logic;
+  signal sda_i    : std_logic := '1';
 begin
-  sda_out <= '1';
+  i2c_clk: entity work.i2c_clock
+    generic map (
+      divs => 8
+    )
+    port map (
+      clk    => clk,
+      reset  => '0',
+      output => slow_clk
+    );
+  
+  process (clk) begin
+    if rising_edge(clk) and (slow_clk = '1') then
+      sda_i <= not sda_i;
+    end if;
+  end process;
+  
+  sda_out <= sda_i;
   scl_out <= '1';
 end;
